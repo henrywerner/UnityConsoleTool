@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:engine="UnityEngine.UIElements"
+        xmlns:editor="UnityEditor.UIElements"
+        xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+        >
+    <engine:Box name="commands">
+        <engine:Label text="header" name="commands-header"/>
+        <engine:ListView name="cmd-list"/>
+        <engine:Button text="+ New Command" name="add-cmd-btn"/>
+        <engine:Button text="Refresh List" name="refresh-btn"/>
+    </engine:Box>
+    
+    <engine:Box name="preview">
+        <engine:ScrollView name="details-scroll">
+            <engine:Box name="details"/>
+        </engine:ScrollView>
+        
+        <engine:Box name="footer">
+            <engine:Button text="Delete Command" name="delete-btn"/>
+            <engine:Button text="Delete Com234234234mand" name="delete-btn-two"/>
+        </engine:Box>
+    </engine:Box>
+</engine:UXML>

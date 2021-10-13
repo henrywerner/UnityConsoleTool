@@ -1,0 +1,57 @@
+.header
+{
+    -unity-font-style: bold;
+    font-size: 20px;
+}
+
+#preview
+{
+    flex-grow: 1;
+    height: 100%;
+    width: 300px;
+}
+
+#details
+{
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+#footer
+{
+    flex-direction: row-reverse;
+    position: absolute;
+    right:    0;
+    bottom:   0;
+    width: 100%;
+}
+
+#card-info-scroll
+{
+    flex-grow: 1;
+}
+
+#commands
+{
+    max-width: 200px;
+    min-width: 30px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+Box
+{
+    flex-grow: 1;
+}
+
+TemplateContainer
+{
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+ListView
+{
+    flex-grow: 1;
+    flex-direction: column;
+    -unity-text-align: middle-center;
+}
