@@ -1,7 +1,7 @@
 .header
 {
     -unity-font-style: bold;
-    font-size: 20px;
+    font-size: 14px;
 }
 
 #preview
@@ -38,9 +38,27 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+#scripts
+{
+    max-width: 200px;
+    min-width: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 Box
 {
     flex-grow: 1;
+}
+
+.add-btn-box
+{
+    flex-direction: row;
+    max-height: 25px;
+}
+
+#add-cmd-entry
+{
+    width: 82%;
 }
 
 TemplateContainer
@@ -53,5 +71,5 @@ ListView
 {
     flex-grow: 1;
     flex-direction: column;
-    -unity-text-align: middle-center;
+    -unity-text-align: middle-left;
 }

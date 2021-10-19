@@ -5,14 +5,36 @@
         xmlns:editor="UnityEditor.UIElements"
         xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
         >
+
+    <engine:Box name="scripts">
+        <engine:Label class="header" text="Scripts" name="scripts-header"/>
+        
+        <engine:ListView name="script-list"/>
+        
+        <engine:Label text="Create cmd from script" name="create-cmd-header"/>
+        <engine:Button text="+ new command" name="create-object-btn"/>
+        
+        <engine:Label text="Create new script" name="add-new-script-header"/>
+        <engine:Box class="add-btn-box">
+            <engine:TextField name="add-cmd-entry"/>
+            <engine:Button text="+" name="add-cmd-btn" tooltip="Add new command"/>
+        </engine:Box>
+        
+        <engine:Button text="Refresh List" name="refresh-btn"/>
+    </engine:Box>
+    
     <engine:Box name="commands">
-        <engine:Label text="header" name="commands-header"/>
+        <engine:Label class="header" text="Commands" name="commands-header"/>
         <engine:ListView name="cmd-list"/>
-        <engine:Button text="+ New Command" name="add-cmd-btn"/>
+        <engine:Box class="add-btn-box">
+            <engine:TextField name="add-cmd-entry"/>
+            <engine:Button text="+" name="add-cmd-btn" tooltip="Add new command"/>
+        </engine:Box>
         <engine:Button text="Refresh List" name="refresh-btn"/>
     </engine:Box>
     
     <engine:Box name="preview">
+        <engine:Label class="header" text="Details" name="details-header"/>
         <engine:ScrollView name="details-scroll">
             <engine:Box name="details"/>
         </engine:ScrollView>
