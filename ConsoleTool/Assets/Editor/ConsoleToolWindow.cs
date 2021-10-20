@@ -9,7 +9,8 @@ using UnityEngine.UIElements;
 
 public class ConsoleToolWindow : EditorWindow
 {
-    //[SerializeField] private CommandCollection _commandCollection;
+    [SerializeField] private CommandCollection _commandCollection;
+    private ListView _cmdList, _scriptList;
     
     [MenuItem("Tools/Console Tool Window")]
     public static void ShowWindow()
@@ -48,14 +49,60 @@ public class ConsoleToolWindow : EditorWindow
         CreateNewCmdButton();
         CreateCmdListView();
         CreateScriptsListView();
+        CreateRefreshButtons();
+        CreateBuildCmdButton();
         //CreateCollectionListView();
+        
+    }
+
+    private void UpdateCmdDictionary() // _Really unoptimized_
+    {
+        FindAllCommands(out ConsoleCommand[] cmdAssets);
+        Dictionary<string, ConsoleCommand> tempCmds = new Dictionary<string, ConsoleCommand>();
+        foreach (var c in cmdAssets)
+            tempCmds.Add(c.CommandName, c);
+
+        _commandCollection.cmds = tempCmds;
+        
+        Debug.Log("<DevConsoleTool> :: CommandCollection updated.");
+    }
+
+    private void CreateRefreshButtons()
+    {
+        var scr_refresh = rootVisualElement.Q<Button>("scr-refresh-btn");
+        Action OnRefreshScripts = () => CreateScriptsListView();
+        scr_refresh.RegisterCallback<MouseUpEvent>((evt) => OnRefreshScripts());
+        
+        var cmd_refresh = rootVisualElement.Q<Button>("cmd-refresh-btn");
+        Action OnRefreshCmds = () =>
+        {
+            CreateCmdListView();
+            UpdateCmdDictionary();
+        };
+        cmd_refresh.RegisterCallback<MouseUpEvent>((evt) => OnRefreshCmds());
+    }
+
+    private void CreateBuildCmdButton()
+    {
+        var btn = rootVisualElement.Q<Button>("create-cmd-btn");
+        Action OnClick = () =>
+        {
+            CreateAssetFromScript();
+            CreateCmdListView();
+        };
+        btn.RegisterCallback<MouseUpEvent>((evt) => OnClick());
     }
 
     private void CreateNewCmdButton()
     {
         var btn = rootVisualElement.Q<Button>("add-cmd-btn");
         var textEntry = rootVisualElement.Q<TextField>("add-cmd-entry");
-        Action OnPress = () => CreateCmdFromTemplate(textEntry.text);
+        Action OnPress = () =>
+        {
+            CreateCmdFromTemplate(textEntry.text);
+            CreateCmdListView(); // we have to redraw the whole section?
+            textEntry.value = "";
+        };
         btn.RegisterCallback<MouseUpEvent>((evt) => OnPress());
     }
 
@@ -70,19 +117,19 @@ public class ConsoleToolWindow : EditorWindow
         
         FindAllCommands(out ConsoleCommand[] cmds);
         
-        ListView cmdList = rootVisualElement.Query<ListView>("cmd-list").First();
-        cmdList.makeItem = () => new Label();
-        cmdList.bindItem = (element, i) =>
+        _cmdList = rootVisualElement.Query<ListView>("cmd-list").First();
+        _cmdList.makeItem = () => new Label();
+        _cmdList.bindItem = (element, i) =>
             (element as Label).text =
             (cmds[i].CommandName == string.Empty)
                 ? "[no name]"
                 : cmds[i].CommandName;
 
-        cmdList.itemsSource = cmds;
-        cmdList.itemHeight = 16; // ?????
-        cmdList.selectionType = SelectionType.Single;
+        _cmdList.itemsSource = cmds;
+        _cmdList.itemHeight = 16; // ?????
+        _cmdList.selectionType = SelectionType.Single;
 
-        cmdList.onSelectionChange += enumerable =>
+        _cmdList.onSelectionChange += enumerable =>
         {
             foreach (var item in enumerable)
             {
@@ -109,31 +156,8 @@ public class ConsoleToolWindow : EditorWindow
         // cmdList.onItemsChosen += obj => Debug.Log(obj);
         // cmdList.onSelectionChange += objects => Debug.Log(objects);
         
-        cmdList.Refresh();
+        _cmdList.Refresh();
     }
-
-    /*
-    private void CreateCollectionListView()
-    {
-        List<string> keys = new List<string>();
-        List<ConsoleCommand> commands = new List<ConsoleCommand>();
-        foreach (var kvp in _commandCollection.cmds)
-        {
-            keys.Add(kvp.Key);
-            commands.Add(kvp.Value);
-        }
-        
-        ListView collectionList = rootVisualElement.Query<ListView>("collection-list").First();
-        collectionList.makeItem = () => new Label();
-        collectionList.bindItem = (element, i) => (element as Label).text = (keys[i] == string.Empty) ? "[no name]": keys[i];
-
-        collectionList.itemsSource = commands;
-        collectionList.itemHeight = 16; // ?????
-        collectionList.selectionType = SelectionType.Single;
-        
-        collectionList.Refresh();
-    }
-    */
 
     private void CreateScriptsListView()
     {
@@ -142,18 +166,18 @@ public class ConsoleToolWindow : EditorWindow
         FileInfo[] info = dir.GetFiles("*.cs");
         foreach (var file in info)
         {
-            scripts.Add(file.Name);
+            scripts.Add(file.Name.Substring(0, file.Name.Length - 3));
         }
         
-        ListView scriptList = rootVisualElement.Query<ListView>("script-list").First();
-        scriptList.makeItem = () => new Label();
-        scriptList.bindItem = (element, i) => (element as Label).text = scripts[i];
+        _scriptList = rootVisualElement.Query<ListView>("script-list").First();
+        _scriptList.makeItem = () => new Label();
+        _scriptList.bindItem = (element, i) => (element as Label).text = scripts[i];
         
-        scriptList.itemsSource = scripts;
-        scriptList.itemHeight = 16; // ?????
-        scriptList.selectionType = SelectionType.Single;
+        _scriptList.itemsSource = scripts;
+        _scriptList.itemHeight = 16; // ?????
+        _scriptList.selectionType = SelectionType.Single;
         
-        scriptList.Refresh();
+        _scriptList.Refresh();
     }
     
     // Find all console command files 
@@ -186,5 +210,23 @@ public class ConsoleToolWindow : EditorWindow
         // AssetDatabase.SaveAssets();
         // EditorUtility.FocusProjectWindow();
         // Selection.activeObject = newCmd;
+    }
+    
+    // Create new asset from script
+    private void CreateAssetFromScript()
+    {
+        string className = _scriptList.selectedItem.ToString();
+        ScriptableObject obj = ScriptableObject.CreateInstance(className);
+
+        string suffix = "";
+        int x = 0;
+        while (System.IO.File.Exists("Assets/DevConsole/Assets/" + className + suffix + ".asset"))
+        {
+            x++;
+            suffix = "_" + x;
+        }
+        
+        AssetDatabase.CreateAsset(obj, "Assets/DevConsole/Assets/" + className + suffix + ".asset");
+        AssetDatabase.SaveAssets();
     }
 }

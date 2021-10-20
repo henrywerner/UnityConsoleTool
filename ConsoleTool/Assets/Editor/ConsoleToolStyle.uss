@@ -4,6 +4,15 @@
     font-size: 14px;
 }
 
+.header-box 
+{
+    max-height: 20px;
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0);
+}
+
 #preview
 {
     flex-grow: 1;
@@ -36,6 +45,7 @@
     max-width: 200px;
     min-width: 30px;
     background-color: rgba(0, 0, 0, 0.3);
+    border-width: 3px;
 }
 
 #scripts
@@ -43,6 +53,7 @@
     max-width: 200px;
     min-width: 30px;
     background-color: rgba(0, 0, 0, 0.5);
+    border-width: 3px;
 }
 
 Box

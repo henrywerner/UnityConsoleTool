@@ -7,30 +7,30 @@
         >
 
     <engine:Box name="scripts">
-        <engine:Label class="header" text="Scripts" name="scripts-header"/>
+        <engine:Box class="header-box">
+            <engine:Label class="header" text="Scripts" name="scripts-header"/>
+            <engine:Button text="↻" name="scr-refresh-btn"/>
+        </engine:Box>
         
         <engine:ListView name="script-list"/>
         
         <engine:Label text="Create cmd from script" name="create-cmd-header"/>
-        <engine:Button text="+ new command" name="create-object-btn"/>
+        <engine:Button text="+ new command" name="create-cmd-btn"/>
         
         <engine:Label text="Create new script" name="add-new-script-header"/>
         <engine:Box class="add-btn-box">
             <engine:TextField name="add-cmd-entry"/>
             <engine:Button text="+" name="add-cmd-btn" tooltip="Add new command"/>
         </engine:Box>
-        
-        <engine:Button text="Refresh List" name="refresh-btn"/>
     </engine:Box>
     
     <engine:Box name="commands">
-        <engine:Label class="header" text="Commands" name="commands-header"/>
-        <engine:ListView name="cmd-list"/>
-        <engine:Box class="add-btn-box">
-            <engine:TextField name="add-cmd-entry"/>
-            <engine:Button text="+" name="add-cmd-btn" tooltip="Add new command"/>
+        <engine:Box class="header-box">
+            <engine:Label class="header" text="Commands" name="commands-header"/>
+            <engine:Button text="↻" name="cmd-refresh-btn"/>
         </engine:Box>
-        <engine:Button text="Refresh List" name="refresh-btn"/>
+            
+        <engine:ListView name="cmd-list"/>
     </engine:Box>
     
     <engine:Box name="preview">
@@ -40,8 +40,8 @@
         </engine:ScrollView>
         
         <engine:Box name="footer">
-            <engine:Button text="Delete Command" name="delete-btn"/>
-            <engine:Button text="Delete Com234234234mand" name="delete-btn-two"/>
+            <engine:Button text="Delete" name="delete-btn"/>
+            <engine:Button text="Duplicate" name="delete-btn-two"/>
         </engine:Box>
     </engine:Box>
 </engine:UXML>

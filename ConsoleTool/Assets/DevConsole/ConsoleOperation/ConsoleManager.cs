@@ -14,12 +14,18 @@ public class ConsoleManager : MonoBehaviour
     [SerializeField] private int historyLength;
     private List<string> _cmdHistory;
 
-    private ConsoleCommand[] cmds;
+    //private ConsoleCommand[] cmds;
     //private Dictionary<string, ConsoleCommand> cmds;
+    [SerializeField] private CommandCollection _commandCollection;
+
+    private void Awake()
+    {
+        _cmdHistory = new List<string>();
+    }
 
     private void Update()
     {
-        if (entryField.isFocused && Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             PrintToLog("> " + entryField.text);
             ParseCommand(entryField.text);
@@ -34,19 +40,26 @@ public class ConsoleManager : MonoBehaviour
         string command = commandItems[0];
         string[] arguments = commandItems.Skip(1).ToArray();
 
-        foreach (var x in cmds)
+        // foreach (var x in cmds)
+        // {
+        //     // check if command key word matches any existing commands
+        //     if (!command.Equals(x.CommandName, StringComparison.OrdinalIgnoreCase))
+        //     {
+        //         continue;
+        //     }
+        //     // if so, call process with the commands arguments
+        //     if (x.Process(arguments))
+        //     {
+        //         return;
+        //     }
+        // }
+
+        if (_commandCollection.cmds.Count == 0)
         {
-            // check if command key word matches any existing commands
-            if (!command.Equals(x.CommandName, StringComparison.OrdinalIgnoreCase))
-            {
-                continue;
-            }
-            // if so, call process with the commands arguments
-            if (x.Process(arguments))
-            {
-                return;
-            }
+            Debug.Log("Command Collection is empty");
         }
+
+        _commandCollection.cmds[command]?.Process(arguments);
     }
 
     private void PrintToLog(string str)
