@@ -1,0 +1,97 @@
+.header
+{
+    -unity-font-style: bold;
+    font-size: 14px;
+}
+
+.header-box 
+{
+    max-height: 20px;
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#preview
+{
+    flex-grow: 1;
+    height: 100%;
+    width: 300px;
+}
+
+#details
+{
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+#footer
+{
+    flex-direction: row-reverse;
+    position: absolute;
+    right:    0;
+    bottom:   0;
+    width: 100%;
+}
+
+#card-info-scroll
+{
+    flex-grow: 1;
+}
+
+#commands
+{
+    max-width: 200px;
+    min-width: 144px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-width: 3px;
+}
+
+#scripts
+{
+    max-width: 200px;
+    min-width: 144px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-width: 3px;
+}
+
+Box
+{
+    flex-grow: 1;
+}
+
+.add-btn-box
+{
+    flex-direction: row;
+    max-height: 25px;
+    min-width: 120px;
+    width: 100%;
+}
+
+#add-cmd-entry
+{
+    flex-grow: 1;
+    border-right-width: 26px;
+}
+
+#add-cmd-btn
+{
+    flex-direction: row-reverse;
+    position: absolute;
+    right:    0;
+    bottom:   0;
+}
+
+TemplateContainer
+{
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+ListView
+{
+    flex-grow: 1;
+    flex-direction: column;
+    -unity-text-align: middle-left;
+}

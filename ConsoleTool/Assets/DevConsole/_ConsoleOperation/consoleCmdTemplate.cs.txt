@@ -1,0 +1,12 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "#SCRIPTNAME#", menuName = "Console Commands/#SCRIPTNAME#")]
+public class #SCRIPTNAME# : ConsoleCommand
+{
+    public override bool Process(string[] args)
+    {
+        // Add code here...
+
+        return true;
+    }
+}

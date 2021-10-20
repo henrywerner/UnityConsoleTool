@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:engine="UnityEngine.UIElements"
+        xmlns:editor="UnityEditor.UIElements"
+        xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+        >
+
+    <engine:Box name="scripts">
+        <engine:Box class="header-box">
+            <engine:Label class="header" text="Scripts" name="scripts-header"/>
+            <engine:Button text="↻" name="scr-refresh-btn"/>
+        </engine:Box>
+        
+        <engine:ListView name="script-list"/>
+        
+        <engine:Label text="Create cmd from script" name="create-cmd-header"/>
+        <engine:Button text="+ new command" name="create-cmd-btn"/>
+        
+        <engine:Label text="Create new script" name="add-new-script-header"/>
+        <engine:Box class="add-btn-box">
+            <engine:TextField name="add-cmd-entry"/>
+            <engine:Button text="+" name="add-cmd-btn" tooltip="Add new command"/>
+        </engine:Box>
+    </engine:Box>
+    
+    <engine:Box name="commands">
+        <engine:Box class="header-box">
+            <engine:Label class="header" text="Commands" name="commands-header"/>
+            <engine:Button text="↻" name="cmd-refresh-btn"/>
+        </engine:Box>
+            
+        <engine:ListView name="cmd-list"/>
+    </engine:Box>
+    
+    <engine:Box name="preview">
+        <engine:Label class="header" text="Details" name="details-header"/>
+        <engine:ScrollView name="details-scroll">
+            <engine:Box name="details"/>
+        </engine:ScrollView>
+        
+        <engine:Box name="footer">
+            <engine:Button text="Save" name="save-btn"/>
+            <engine:Button text="Delete" name="delete-btn"/>
+        </engine:Box>
+    </engine:Box>
+</engine:UXML>
